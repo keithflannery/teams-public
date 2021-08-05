@@ -5,7 +5,6 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Break
 }
 else {
-    Write-Host "Code is running as administrator — go on executing the script..." -ForegroundColor Green
     $Installedmodules = Get-InstalledModule
     $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
 
@@ -13,5 +12,5 @@ else {
         if ($Installedmodules.Name -notcontains $checkModule) {
             Install-Module $checkModule
         }
-    }
+    }   
 }
