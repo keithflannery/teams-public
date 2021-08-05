@@ -6,6 +6,7 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 else {
     if ($PSVersionTable.PSVersion.Major -eq '5') {
+        Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         $Installedmodules = Get-InstalledModule
         $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
 
