@@ -5,12 +5,17 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Break
 }
 else {
-    $Installedmodules = Get-InstalledModule
-    $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
+    if ($PSVersionTable.PSVersion.Major -eq '5') {
+        $Installedmodules = Get-InstalledModule
+        $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
 
-    foreach ($checkModule in $modules) {
-        if ($Installedmodules.Name -notcontains $checkModule) {
-            Install-Module $checkModule
-        }
-    }   
+        foreach ($checkModule in $modules) {
+            if ($Installedmodules.Name -notcontains $checkModule) {
+                Install-Module $checkModule
+            }
+        }   
+    }
+    else {
+        Write-Warning "This needs to be run in PS version 5!"
+    }
 }
