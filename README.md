@@ -1,7 +1,7 @@
 # teams-public
 
 ## Install required PS Modules
-[Prereqs PS1](./install-modules.ps1)
+[Prereqs PS1](./install-prereqs.ps1)
 
 Open Powershell 5 as Admin, and run:
 ```
@@ -25,4 +25,4 @@ $voiceskus = "BUSINESS_VOICE_DIRECTROUTING", "MCOCV", "MCOEV", "BUSINESS_VOICE_D
 
 ```
 
-Once you've executed the script, and you should be connected to teams online, and be able to use the functions inside of [Teams Includes](./teans-includes.ps1)
+Once you've executed the script, and you should be connected to teams online, and be able to use the functions inside of [Teams Includes](./teams-includes.ps1)
