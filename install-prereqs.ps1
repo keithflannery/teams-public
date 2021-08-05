@@ -5,6 +5,7 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Break
 }
 else {
+    Write-Host "Running as elevated user...." -ForegroundColor Green
     if ($PSVersionTable.PSVersion.Major -eq '5') {
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         $Installedmodules = Get-InstalledModule
