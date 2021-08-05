@@ -180,12 +180,8 @@ function new-kf-csuser {
 }
 
 function get-phonenumbers {
-    param (
-        [parameter()]
-        $objects = "UserPrincipalName, LineUri"
-    )
 
-    get-csonlineuser | where-object { $_.LineUri -match '^tel:\+61[2378]\d{8}(?:|;ext\=\d+)$' } | Select-Object $objects
+    get-csonlineuser | where-object { $_.LineUri -match '^tel:\+61[2378]\d{8}(?:|;ext\=\d+)$' } | Select-Object UserPrincipalName, LineUri
 }
 function validate-allusers {
     
