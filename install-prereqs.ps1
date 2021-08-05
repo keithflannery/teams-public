@@ -8,7 +8,7 @@ else {
     if ($PSVersionTable.PSVersion.Major -eq '5') {
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
         $Installedmodules = Get-InstalledModule
-        $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
+        $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel", "AzureAD"
 
         foreach ($checkModule in $modules) {
             if ($Installedmodules.Name -notcontains $checkModule) {
