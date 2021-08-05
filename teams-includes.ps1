@@ -1,9 +1,10 @@
 #Requires -Module MicrosoftTeams
 #Requires -Module MSOnline
 #Requires -Module AzureAD
+#Requires -Module ImportExcel
 
 
-$modules = "MicrosoftTeams", "MSOnline", "AzureAD"
+$modules = "MicrosoftTeams", "MSOnline", "AzureAD", "ImportExcel"
 foreach ($module in $modules) {
     import-Module $module
 }
