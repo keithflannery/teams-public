@@ -1,6 +1,11 @@
+if (-NOT $PSVersionTable.PSVersion.Major -eq '5') {
+    Write-Warning "This script needs to run in PS 5!"
+}
+
 #Requires -Module MicrosoftTeams
 #Requires -Module MSOnline
 #Requires -Module AzureAD
+
 
 $modules = "MicrosoftTeams", "MSOnline", "AzureAD"
 foreach ($module in $modules) {
