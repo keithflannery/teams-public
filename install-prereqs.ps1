@@ -14,6 +14,6 @@ $modules = "MicrosoftTeams", "MSOnline", "AzureAD", "AZ", "ImportExcel"
 foreach ($checkModule in $modules) {
     if ($Installedmodules.Name -notcontains $checkModule) {
         "$checkModule not installed!"
-        Install-Module $checkModule -WhatIf
+        Install-Module $checkModule
     }
 }
