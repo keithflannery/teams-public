@@ -239,3 +239,20 @@ function validate-allusers {
 
     }
 }
+
+
+function get-userdetails {
+    get-csonlineuser | Where-Object { $_.EnterpriseVoiceEnabled -eq $true } | select-object FirstName, LastName, EnterpriseVoiceEnabled, HostedVoiceMail, LineURI, UsageLocation, UserPrincipalName, WindowsEmailAddress, SipAddress, OnPremLineURI, OnlineVoiceRoutingPolicy, TenantDialPlan, HostingProvider, TeamsUpgradeEffectiveMode, OnPremLineURIManuallySet, TeamsIPPhonePolicy | Export-Excel
+}
+
+
+
+
+function delete-kf-csuser {
+
+    param (
+        [parameter(Mandatory = $true)]
+        $UPN
+    )
+    Set-CSUser -Identity $UPN -OnPremLineURI $null
+    Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $false 
