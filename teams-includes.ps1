@@ -257,3 +257,44 @@ function delete-kf-csuser {
     Set-CSUser -Identity $UPN -OnPremLineURI $null
     Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $false
 }
+
+function new-kf-resourceaccount {
+    param (
+        [parameter(Mandatory = $true)]
+        $ratype,
+        $UPN,
+        $DisplayName,
+        $URI,
+        $IgnoreWarning = $false
+    )
+    $sku = Get-MsolAccountSku | where-object {$_.AccountSkuId -match '^.+\:PHONESYSTEM_VIRTUALUSER'}
+
+    write-host "This will take approximatly 'Microsoft' 4 minutes to run..." -ForegroundColor Green
+    if ($IgnoreWarning -eq $false) {
+        write-host "Please ensure you have a spare 'Virtual Phone System' User!" -ForegroundColor Yellow
+        $confirmation = Read-Host "Ok? [y/n]"
+        while($confirmation -ne "y"){
+            if ($confirmation -eq 'n') {exit}
+            $confirmation = Read-Host "Ok? [y/n]"
+        }
+    }
+    if ($ratype -eq 'aa'){
+        $appid = 'ce933385-9390-45d1-9512-c8d228074e07'
+    }
+    Elseif ($ratype -eq 'cq'){
+        $appid = '11cd3e2e-fccb-42ad-ad00-878b93575e07'
+    }
+    else {
+        write-host 'Need to specifiy resourse account type -ratype aa (auto attendent), -ratype cq (call queue)!' -ForegroundColor Red
+        exit
+    }
+    New-CsOnlineApplicationInstance -UserPrincipalName $UPN -DisplayName $DisplayName -ApplicationId $appid
+    start-sleep -Seconds 120
+    Set-MsolUser -UserPrincipalName $UPN -UsageLocation "AU"
+    Set-MsolUserLicense -UserPrincipalName $UPN -AddLicenses $sku.AccountSkuId
+    Start-Sleep -Seconds 120
+    Set-CsOnlineApplicationInstance -Identity $UPN -OnpremPhoneNumber $URI
+    start-sleep -Seconds 5
+    write-host "process complete - please make sure the phone number is set below (if you set one!):" -ForegroundColor Yellow
+    Get-CsOnlineApplicationInstance -Identity $UPN
+}
