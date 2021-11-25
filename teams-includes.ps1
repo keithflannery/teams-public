@@ -181,7 +181,7 @@ function new-kf-csuser {
 }
 
 function get-phonenumbers {
-    get-csonlineuser | where-object { $_.LineUri -match '^tel:\+61[2378]\d{8}(?:|;ext\=\d+)$' } | Select-Object UserPrincipalName, FirstName, LastName, DisplayName, LineUri, City | export-excel
+    get-csonlineuser | where-object { $_.LineUri -match '^tel:\+?61[2378]\d{8}(?:|;ext\=\d+)$' } | Select-Object UserPrincipalName, FirstName, LastName, DisplayName, LineUri, City | export-excel
 }
 
 function validate-allusers {
