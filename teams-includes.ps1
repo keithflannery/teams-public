@@ -28,7 +28,7 @@ function Get-Connected-MFA {
     Write-Host "Connecting to AzureAD Powershell..." -ForegroundColor Green
     Connect-AzureAD
     Write-Host "Connecting to Microsoft Teams Powershell..." -ForegroundColor Green
-    Connect-MicrosoftTeams -Credential $credential
+    Connect-MicrosoftTeams
 }
 
 function Disconnect-Sessions {
