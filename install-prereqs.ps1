@@ -8,9 +8,22 @@ else {
     Write-Host "Running as elevated user...." -ForegroundColor Green
     if ($PSVersionTable.PSVersion.Major -eq '5') {
         Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-        Install-Module -Name MicrosoftTeams -RequiredVersion 2.3.1
+
+
         $Installedmodules = Get-InstalledModule
-        $modules = "MSOnline", "AzureAD", "AZ", "ImportExcel", "AzureAD"
+        if ($Installedmodules.Name -contains "MicrosoftTeams"){
+            $version = Get-InstalledModule -Name MicrosoftTeams | Select-Object Version
+            if ($version -ne 3.1.1){
+                Uninstall-Module -Name MicrosoftTeams
+                Install-Module -Name MicrosoftTeams -RequiredVersion 3.1.1
+            }
+        }
+        else 
+        {
+           Install-Module -Name MicrosoftTeams -RequiredVersion 3.1.1
+        }
+        
+        $modules = "MSOnline", "AzureAD", "ImportExcel", "AzureAD"
 
         foreach ($checkModule in $modules) {
             if ($Installedmodules.Name -notcontains $checkModule) {

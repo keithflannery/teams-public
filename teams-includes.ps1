@@ -1,13 +1,9 @@
-#Requires -Module MicrosoftTeams
+#Requires -Modules @{ ModuleName="MicrosoftTeams"; RequiredVersion="3.1.1" }
 #Requires -Module MSOnline
 #Requires -Module AzureAD
 #Requires -Module ImportExcel
 
-
-$modules = "MicrosoftTeams", "MSOnline", "AzureAD", "ImportExcel"
-foreach ($module in $modules) {
-    import-Module $module
-}
+import-Module MicrosoftTeams, MSOnline, ImportExcel
 
 function Get-Connected {
 
@@ -24,10 +20,15 @@ function Get-Connected {
     Connect-MsolService -Credential $credential
     Connect-AzureAD -Credential $credential
     Connect-MicrosoftTeams -Credential $credential
-    
-    # $SfbSession = New-CsOnlineSession -Credential $credential
-    # Import-PSSession $SfbSession -AllowClobber
-    
+}
+
+function Get-Connected-MFA {
+    write-host "Connecting to 365 Powershell..." -ForegroundColor Green
+    Connect-MsolService
+    Write-Host "Connecting to AzureAD Powershell..." -ForegroundColor Green
+    Connect-AzureAD
+    Write-Host "Connecting to Microsoft Teams Powershell..." -ForegroundColor Green
+    Connect-MicrosoftTeams -Credential $credential
 }
 
 function Disconnect-Sessions {
@@ -169,7 +170,7 @@ function new-kf-csuser {
 
         Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $true 
         #if ($userdata.OnPremLineURIManuallySet -eq $false){
-        Set-CSUser -Identity $UPN -OnPremLineURI $LineURI
+        Set-CSUser -Identity $UPN -LineURI $LineURI
         #}
         Grant-CsOnlineVoiceRoutingPolicy -id $UPN -PolicyName $OnlineVoiceRoutingPolicy
         Grant-CsTenantDialPlan -id $UPN -PolicyName $TenantDialPlan
