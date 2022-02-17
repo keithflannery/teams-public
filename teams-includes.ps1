@@ -162,12 +162,15 @@ function new-kf-csuser {
             elseif ($LineURI -match '^tel:\+618\d{8}(?:|;ext\=\d+)$') {
                 $TenantDialPlan = "AU-08"
             }
+            elseif ($lineURI -match '^tel:\+64(2|9)(\d{7}|\d{9})(?:|;ext\=\d+)$') {
+                $TenantDialPlan = "NZ-09"
+            }
             else {
-                Write-Error "Line URI not a valid Australian Landline Number e.g.: tel:+61736249100"
+                Write-Error "Line URI not a valid Australian/NewZealand Landline Number e.g.: AU tel:+61736249100, NZ tel:+6495238436"
                 exit
             }
         }
-
+        
         Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $true 
         #if ($userdata.OnPremLineURIManuallySet -eq $false){
         Set-CSUser -Identity $UPN -LineURI $LineURI
