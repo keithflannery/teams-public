@@ -264,7 +264,7 @@ function delete-kf-csuser {
         [parameter(Mandatory = $true)]
         $UPN
     )
-    Set-CSUser -Identity $UPN -OnPremLineURI $null
+    Set-CSUser -Identity $UPN -LineURI $null
     Set-CsUser -Identity $UPN -EnterpriseVoiceEnabled $false
 }
 
